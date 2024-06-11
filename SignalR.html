@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Client</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #chat-container {
+            max-width: 500px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #chat-messages {
+            height: 200px;
+            overflow-y: scroll;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        #messageInput {
+            width: calc(100% - 80px);
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <h2>Chat Client</h2>
+        <p>This is Michael Brown's chat testing account. Token has been already pasted for testing purposes. Search for Michael Brown on mobile app and open profile -> start chat.</p>
+        <div>EMAIL: michael.brown@example.com</div>
+        <div>PASS: Lozinka123!</div>
+        <div id="chat-messages"></div>
+        <input type="text" id="messageInput" placeholder="Type a message...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+    <script>
+        var connection = new signalR.HubConnectionBuilder().withUrl("http://localhost:7169/example?recipient_id=1", {
+            accessTokenFactory: () => "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1pY2hhZWwuYnJvd25AZXhhbXBsZS5jb20iLCJ1c2VyaWQiOiI0IiwiZmlyc3RuYW1lIjoiTWljaGFlbCIsImxhc3RuYW1lIjoiQnJvd24iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoyNTM0MDIzMDA4MDAsImlzcyI6Imh0dHA6Ly9mcmllbmRseS5hcHAiLCJhdWQiOiJodHRwOi8vZnJlaW5kbHkuYXBwIn0.PRtjSorIX1XtNKZfKymi-XcHFL7tyLBwk-zhztUT8JU"
+        }).build();
+
+        connection.start().then(function () {
+            console.log("SignalR Connected");
+            console.log(connection.connectionId);
+        }).catch(function (err) {
+            console.error(err.toString());
+        });
+
+        connection.on("SendMessageAsync", function (message) {
+            var chatMessages = document.getElementById("chat-messages");
+            var messageElement = document.createElement("div");
+            messageElement.textContent = "Received: " + message;
+            chatMessages.appendChild(messageElement);
+        });
+
+        function sendMessage() {
+            var messageContent = document.getElementById("messageInput").value;
+            var chatMessages = document.getElementById("chat-messages");
+            var messageElement = document.createElement("div");
+            messageElement.textContent = "Sent: " + messageContent;
+            chatMessages.appendChild(messageElement);
+
+            connection.invoke("SendMessageAsync", messageContent).catch(function (err) {
+                console.error(err.toString());
+            });
+
+            // Clear input field after sending message
+            document.getElementById("messageInput").value = "";
+        }
+    </script>
+</body>
+</html>
