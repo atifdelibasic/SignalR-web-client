@@ -61,7 +61,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
     <script>
         var connection = new signalR.HubConnectionBuilder().withUrl("http://localhost:7169/example?recipient_id=1", {
-            accessTokenFactory: () => "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1pY2hhZWwuYnJvd25AZXhhbXBsZS5jb20iLCJ1c2VyaWQiOiI0IiwiZmlyc3RuYW1lIjoiTWljaGFlbCIsImxhc3RuYW1lIjoiQnJvd24iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoyNTM0MDIzMDA4MDAsImlzcyI6Imh0dHA6Ly9mcmllbmRseS5hcHAiLCJhdWQiOiJodHRwOi8vZnJlaW5kbHkuYXBwIn0.PRtjSorIX1XtNKZfKymi-XcHFL7tyLBwk-zhztUT8JU"
+            accessTokenFactory: () => "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1pY2hhZWwuYnJvd25AZXhhbXBsZS5jb20iLCJ1c2VyaWQiOiI0IiwiZmlyc3RuYW1lIjoiTWljaGFlbCIsImxhc3RuYW1lIjoiQnJvd24iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoyNTM0MDIzMDA4MDAsImlzcyI6Imh0dHA6Ly9mcmVpbmRseS5hcHAiLCJhdWQiOiJodHRwOi8vZnJlaW5kbHkuYXBwIn0.ATL83JYohmI106-F46RG5jTkrG9rdePNwFhoSVufiN0"
         }).build();
 
         connection.start().then(function () {
